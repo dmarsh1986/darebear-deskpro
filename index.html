@@ -97,18 +97,24 @@ h1 {
 }
 
 #bearLogo {
-  max-height: 460px;
+  max-height: 430px;
   cursor: pointer;
   transition: all .7s ease;
-  animation: pulse 1.8s infinite alternate;
+  animation: pulse 1.8s infinite alternate, floaty 5s infinite ease-in-out;
   filter:
     drop-shadow(0 0 20px #00ffe1)
     drop-shadow(0 0 50px #6a00ff);
 }
 
 @keyframes pulse {
-  from { transform: scale(1); }
-  to { transform: scale(1.05); }
+  from { filter: drop-shadow(0 0 20px #00ffe1) drop-shadow(0 0 50px #6a00ff); }
+  to { filter: drop-shadow(0 0 35px #00ffe1) drop-shadow(0 0 75px #6a00ff); }
+}
+
+@keyframes floaty {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(1deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
 }
 
 .bubble {
@@ -122,9 +128,28 @@ h1 {
   text-align: center;
   line-height: 1.35;
   transition: all .8s ease;
+  min-width: 430px;
   box-shadow:
     0 0 20px #00ffe1,
     0 0 45px #6a00ff;
+}
+
+.afterButtons {
+  margin-top: 20px;
+  display: none;
+  gap: 15px;
+}
+
+.afterButtons button {
+  font-size: 24px;
+  font-weight: bold;
+  padding: 16px 24px;
+  border-radius: 18px;
+  border: 1px solid #00ffe1;
+  background: rgba(0,0,0,.55);
+  color: #00ffe1;
+  box-shadow: 0 0 20px rgba(0,255,225,.35);
+  cursor: pointer;
 }
 
 .footer {
@@ -146,51 +171,47 @@ h1 {
 }
 
 .overlayBox {
-  width: 700px;
+  width: 780px;
   padding: 45px;
   border-radius: 30px;
-  background: rgba(0,0,0,.65);
+  background: rgba(0,0,0,.75);
   border: 1px solid rgba(0,255,225,.55);
   box-shadow:
     0 0 35px #00ffe1,
     0 0 90px #6a00ff;
-  text-align: center;
 }
 
-.overlayTitle {
-  font-size: 48px;
+.terminal {
+  font-family: "Courier New", monospace;
+  font-size: 28px;
+  line-height: 1.55;
   color: #00ffe1;
-  text-shadow: 0 0 18px #00ffe1;
-  margin-bottom: 30px;
+  text-shadow: 0 0 12px #00ffe1;
+  min-height: 340px;
+  white-space: pre-line;
 }
 
-.loadingLine {
-  font-size: 30px;
-  margin: 18px 0;
-  opacity: 0;
-  transition: opacity .4s ease;
+.flash {
+  animation: flashScreen .35s ease;
 }
 
-.bar {
-  width: 100%;
-  height: 24px;
-  background: rgba(255,255,255,.12);
-  border-radius: 20px;
-  overflow: hidden;
-  margin-top: 12px;
-  opacity: 0;
+@keyframes flashScreen {
+  0% { filter: brightness(1); }
+  50% { filter: brightness(2.2); }
+  100% { filter: brightness(1); }
 }
 
-.fill {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, #00ffe1, #ff7b00, #ff00ff);
-  border-radius: 20px;
-  transition: width .8s ease;
+.shake {
+  animation: shake .45s ease;
 }
 
-.afterHours body {
-  background: radial-gradient(circle at center, #ff6a00, #6a00ff, #000000 80%);
+@keyframes shake {
+  0% { transform: translate(0,0) scale(1.1); }
+  20% { transform: translate(-12px,6px) scale(1.16); }
+  40% { transform: translate(12px,-6px) scale(1.16); }
+  60% { transform: translate(-8px,4px) scale(1.14); }
+  80% { transform: translate(8px,-4px) scale(1.12); }
+  100% { transform: translate(0,0) scale(1.1); }
 }
 </style>
 </head>
@@ -240,25 +261,21 @@ h1 {
         Vibes Detected<br>
         ENTER THE BEAR DEN
       </div>
+
+      <div id="afterButtons" class="afterButtons">
+        <button onclick="roar()">🐻 ROAR</button>
+        <button onclick="djMode()">🎧 DJ MODE</button>
+      </div>
     </div>
   </div>
 
 </div>
 
-<div class="footer">DareBear Desk Pro v1.2</div>
+<div class="footer">DareBear Desk Pro v1.3</div>
 
 <div id="overlay" class="overlay">
   <div class="overlayBox">
-    <div class="overlayTitle">🐻 INITIALIZING</div>
-
-    <div id="line1" class="loadingLine">Loading Bass Levels...</div>
-    <div class="bar" id="bar1"><div class="fill" id="fill1"></div></div>
-
-    <div id="line2" class="loadingLine">Scanning Vibes...</div>
-    <div class="bar" id="bar2"><div class="fill" id="fill2"></div></div>
-
-    <div id="line3" class="loadingLine">Activating After Hours Mode...</div>
-    <div class="bar" id="bar3"><div class="fill" id="fill3"></div></div>
+    <div id="terminal" class="terminal"></div>
   </div>
 </div>
 
@@ -271,6 +288,21 @@ let busy = false;
 const logo = document.getElementById("bearLogo");
 const bubble = document.getElementById("speechBubble");
 const overlay = document.getElementById("overlay");
+const terminal = document.getElementById("terminal");
+const afterButtons = document.getElementById("afterButtons");
+
+const normalLines = [
+  "Need another coffee?",
+  "Bass levels holding steady.",
+  "Another TAC case?",
+  "Welcome back, Darren.",
+  "One more firmware upgrade...",
+  "Cisco TAC fears this engineer.",
+  "Warning: excessive professionalism detected.",
+  "Systems online.",
+  "Vibes detected.",
+  "Ready when you are."
+];
 
 logo.addEventListener("click", () => {
   if (busy) return;
@@ -293,39 +325,57 @@ logo.addEventListener("click", () => {
   }
 });
 
-function show(id) {
-  document.getElementById(id).style.opacity = 1;
-}
+setInterval(() => {
+  if (!bearMode && !busy) {
+    const msg = normalLines[Math.floor(Math.random() * normalLines.length)];
+    bubble.innerHTML = msg + "<br><br>Systems: Online";
+  }
+}, 18000);
 
-function fill(id) {
-  document.getElementById(id).style.width = "100%";
-}
+function typeText(text, speed = 35) {
+  return new Promise(resolve => {
+    terminal.innerHTML = "";
+    let i = 0;
 
-function resetLoading() {
-  ["line1","line2","line3","bar1","bar2","bar3"].forEach(id => {
-    document.getElementById(id).style.opacity = 0;
+    const typer = setInterval(() => {
+      terminal.innerHTML += text.charAt(i);
+      i++;
+
+      if (i >= text.length) {
+        clearInterval(typer);
+        resolve();
+      }
+    }, speed);
   });
-
-  ["fill1","fill2","fill3"].forEach(id => {
-    document.getElementById(id).style.width = "0%";
-  });
 }
 
-function startSequence() {
+async function startSequence() {
   busy = true;
-  resetLoading();
-
   overlay.style.display = "flex";
 
-  setTimeout(() => { show("line1"); show("bar1"); fill("fill1"); }, 400);
-  setTimeout(() => { show("line2"); show("bar2"); fill("fill2"); }, 1300);
-  setTimeout(() => { show("line3"); show("bar3"); fill("fill3"); }, 2200);
+  const text =
+`> Initializing DareBear OS...
+
+> Connecting to Bass Engine...
+████████████████ 100%
+
+> Scanning Vibes...
+████████████████ 100%
+
+> Loading Mischief...
+████████████████ 100%
+
+> After Hours Mode Activated.
+
+Welcome back, Darren.`;
+
+  await typeText(text, 28);
 
   setTimeout(() => {
     overlay.style.display = "none";
     afterHoursMode();
     busy = false;
-  }, 3400);
+  }, 800);
 }
 
 function afterHoursMode() {
@@ -334,10 +384,10 @@ function afterHoursMode() {
   document.body.style.background =
     "radial-gradient(circle at center,#ff6a00,#6a00ff,#000000 80%)";
 
-  logo.style.transform = "scale(1.12) rotate(-3deg)";
-
+  logo.style.animation = "floaty 3s infinite ease-in-out";
+  logo.style.transform = "scale(1.1) rotate(-3deg)";
   logo.style.filter =
-    "drop-shadow(0 0 40px #ff7b00) drop-shadow(0 0 90px #6a00ff)";
+    "drop-shadow(0 0 45px #ff7b00) drop-shadow(0 0 95px #6a00ff)";
 
   bubble.innerHTML =
     "🐻 AFTER HOURS MODE<br><br>" +
@@ -348,9 +398,10 @@ function afterHoursMode() {
 
   bubble.style.background = "#141414";
   bubble.style.color = "#00ffe1";
-
   bubble.style.boxShadow =
     "0 0 30px #ff7b00, 0 0 80px #6a00ff";
+
+  afterButtons.style.display = "flex";
 }
 
 function normalMode() {
@@ -359,8 +410,8 @@ function normalMode() {
   document.body.style.background =
     "radial-gradient(circle at top left,#241047,#050008 70%)";
 
+  logo.style.animation = "pulse 1.8s infinite alternate, floaty 5s infinite ease-in-out";
   logo.style.transform = "scale(1)";
-
   logo.style.filter =
     "drop-shadow(0 0 20px #00ffe1) drop-shadow(0 0 50px #6a00ff)";
 
@@ -372,9 +423,33 @@ function normalMode() {
 
   bubble.style.background = "white";
   bubble.style.color = "#231447";
-
   bubble.style.boxShadow =
     "0 0 20px #00ffe1, 0 0 45px #6a00ff";
+
+  afterButtons.style.display = "none";
+}
+
+function roar() {
+  document.body.classList.add("flash");
+  logo.classList.add("shake");
+
+  bubble.innerHTML =
+    "🐻 ROOOAAARRR!<br><br>" +
+    "Bass Pressure: Critical<br>" +
+    "Vibes: Uncontained";
+
+  setTimeout(() => {
+    document.body.classList.remove("flash");
+    logo.classList.remove("shake");
+  }, 500);
+}
+
+function djMode() {
+  bubble.innerHTML =
+    "🎧 DJ MODE ARMED<br><br>" +
+    "Decks: Ready<br>" +
+    "Crowd: Simulated<br>" +
+    "Bass Face: Engaged";
 }
 </script>
 
