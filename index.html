@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>DareBear Mode</title>
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background: radial-gradient(circle, #241047, #050008 70%);
+    color: white;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .wrap {
+    position: relative;
+    text-align: center;
+  }
+
+  .bubble {
+    position: absolute;
+    top: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    color: #111;
+    padding: 18px 26px;
+    border-radius: 24px;
+    font-size: 28px;
+    font-weight: bold;
+    line-height: 1.25;
+    min-width: 420px;
+    box-shadow: 0 0 30px rgba(0,255,225,.65);
+  }
+
+  .bubble:after {
+    content: "";
+    position: absolute;
+    bottom: -22px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 22px 16px 0 16px;
+    border-style: solid;
+    border-color: white transparent transparent transparent;
+  }
+
+  img {
+    max-height: 520px;
+    max-width: 80vw;
+    animation: pulse 1.6s infinite alternate;
+    filter: drop-shadow(0 0 25px #00ffe1)
+            drop-shadow(0 0 45px #a600ff);
+  }
+
+  @keyframes pulse {
+    from { transform: scale(1); }
+    to { transform: scale(1.06); }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="bubble">
+      Welcome Darren.<br>
+      Bass Levels: Nominal<br>
+      Vibes Detected<br>
+      ENTER THE BEAR DEN
+    </div>
+
+    <img src="logo.png" alt="DareBear Logo">
+  </div>
+</body>
+</html>
