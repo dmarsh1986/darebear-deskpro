@@ -1,170 +1,429 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8">
 <title>DareBear Engineer Dashboard</title>
 
 <style>
-  body {
-    margin: 0;
-    height: 100vh;
-    background: radial-gradient(circle at top left, #251054, #050008 70%);
-    color: white;
-    font-family: Arial, sans-serif;
-    overflow: hidden;
-  }
 
-  .dashboard {
-    height: 100vh;
-    display: grid;
-    grid-template-columns: 1.2fr .8fr;
-    gap: 28px;
-    padding: 45px;
-    box-sizing: border-box;
-  }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-  .card {
-    background: rgba(0,0,0,.42);
-    border: 1px solid rgba(0,255,225,.45);
-    border-radius: 28px;
-    padding: 28px;
-    box-shadow: 0 0 28px rgba(0,255,225,.20);
-  }
+body{
 
-  h1 {
-    font-size: 44px;
-    margin: 0 0 8px;
-    color: #00ffe1;
-    text-shadow: 0 0 18px #00ffe1;
-  }
+    font-family:Arial,Helvetica,sans-serif;
 
-  h2 {
-    font-size: 30px;
-    margin: 0 0 20px;
-    color: #ff7bff;
-  }
+    background:radial-gradient(circle at top left,#241047,#050008 70%);
 
-  .subtitle {
-    font-size: 25px;
-    opacity: .9;
-    margin-bottom: 32px;
-  }
+    color:white;
 
-  .status {
-    font-size: 30px;
-    line-height: 1.7;
-  }
+    overflow:hidden;
 
-  .green {
-    color: #00ff9d;
-    text-shadow: 0 0 12px #00ff9d;
-  }
+    height:100vh;
 
-  .tools {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin-top: 18px;
-  }
+    transition:all .8s ease;
 
-  .tool {
-    font-size: 25px;
-    padding: 18px;
-    border-radius: 18px;
-    background: rgba(255,255,255,.08);
-    border: 1px solid rgba(255,255,255,.18);
-  }
+}
 
-  .bearBox {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-  }
+.dashboard{
 
-  img {
-    max-height: 430px;
-    max-width: 90%;
-    animation: pulse 1.7s infinite alternate;
+    display:grid;
+
+    grid-template-columns:60% 40%;
+
+    gap:25px;
+
+    padding:35px;
+
+    height:100%;
+
+}
+
+.card{
+
+    background:rgba(0,0,0,.35);
+
+    border:1px solid rgba(0,255,225,.35);
+
+    border-radius:30px;
+
+    padding:28px;
+
+    box-shadow:0 0 25px rgba(0,255,225,.15);
+
+}
+
+h1{
+
+    color:#00ffe1;
+
+    font-size:55px;
+
+    text-shadow:0 0 18px #00ffe1;
+
+    margin-bottom:10px;
+
+}
+
+.subtitle{
+
+    font-size:28px;
+
+    margin-bottom:40px;
+
+}
+
+.sectionTitle{
+
+    color:#ff71ff;
+
+    font-size:40px;
+
+    margin-bottom:25px;
+
+}
+
+.status{
+
+    font-size:28px;
+
+    line-height:1.8;
+
+}
+
+.green{
+
+    color:#00ff99;
+
+    text-shadow:0 0 12px #00ff99;
+
+}
+
+.tools{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:18px;
+
+}
+
+.tool{
+
+    padding:18px;
+
+    border-radius:16px;
+
+    background:rgba(255,255,255,.08);
+
+    border:1px solid rgba(255,255,255,.15);
+
+    font-size:28px;
+
+}
+
+.rightSide{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+}
+
+.bearCard{
+
+    width:100%;
+
+    height:100%;
+
+    border-radius:30px;
+
+    border:1px solid rgba(0,255,225,.35);
+
+    background:rgba(0,0,0,.30);
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+}
+
+#bearLogo{
+
+    max-height:460px;
+
+    cursor:pointer;
+
+    transition:all .7s ease;
+
+    animation:pulse 1.8s infinite alternate;
+
     filter:
-      drop-shadow(0 0 25px #00ffe1)
-      drop-shadow(0 0 55px #a600ff);
-  }
+    drop-shadow(0 0 20px #00ffe1)
+    drop-shadow(0 0 50px #6a00ff);
 
-  .bubble {
-    margin-top: 20px;
-    background: rgba(255,255,255,.96);
-    color: #20113d;
-    padding: 22px 26px;
-    border-radius: 26px;
-    font-size: 26px;
-    font-weight: bold;
-    line-height: 1.35;
-    text-align: center;
+}
+
+@keyframes pulse{
+
+from{
+
+transform:scale(1);
+
+}
+
+to{
+
+transform:scale(1.05);
+
+}
+
+}
+
+.bubble{
+
+    margin-top:25px;
+
+    background:white;
+
+    color:#231447;
+
+    padding:25px;
+
+    border-radius:24px;
+
+    font-size:32px;
+
+    font-weight:bold;
+
+    text-align:center;
+
+    line-height:1.35;
+
+    transition:all .8s ease;
+
     box-shadow:
-      0 0 25px #00ffe0,
-      0 0 60px #6a00ff;
-  }
+    0 0 20px #00ffe1,
+    0 0 45px #6a00ff;
 
-  .footer {
-    position: absolute;
-    left: 45px;
-    bottom: 28px;
-    font-size: 20px;
-    opacity: .65;
-  }
+}
 
-  @keyframes pulse {
-    from { transform: scale(1); }
-    to { transform: scale(1.04); }
-  }
+.footer{
+
+    position:absolute;
+
+    bottom:20px;
+
+    left:35px;
+
+    opacity:.65;
+
+    font-size:20px;
+
+}
+
 </style>
+
 </head>
 
 <body>
-  <div class="dashboard">
-    <div>
-      <div class="card">
-        <h1>🐻 DareBear Engineer Dashboard</h1>
-        <div class="subtitle">Senior Cisco Collaboration Engineer</div>
 
-        <h2>Current Status</h2>
-        <div class="status">
-          <span class="green">● Connected</span><br>
-          RoomOS: Online<br>
-          Network: OK<br>
-          Control Hub: Ready
-        </div>
-      </div>
+<div class="dashboard">
 
-      <div class="card" style="margin-top:28px;">
-        <h2>Today’s Tools</h2>
-        <div class="tools">
-          <div class="tool">Control Hub</div>
-          <div class="tool">CUCM</div>
-          <div class="tool">Webex Devices</div>
-          <div class="tool">TAC</div>
-          <div class="tool">Network Test</div>
-          <div class="tool">Room Health</div>
-        </div>
-      </div>
-    </div>
+<div>
 
-    <div class="card bearBox">
-      <img src="logo.png" alt="DareBear Logo">
+<div class="card">
 
-      <div class="bubble">
-        Welcome Darren.<br>
-        Bass Levels: Nominal<br>
-        Vibes Detected<br>
-        ENTER THE BEAR DEN
-      </div>
-    </div>
-  </div>
+<h1>🐻 DareBear Engineer Dashboard</h1>
 
-  <div class="footer">
-    DareBear Desk Pro v1.0
-  </div>
+<div class="subtitle">
+
+Senior Cisco Collaboration Engineer
+
+</div>
+
+<div class="sectionTitle">
+
+Current Status
+
+</div>
+
+<div class="status">
+
+<div class="green">● Connected</div>
+
+RoomOS : Online<br>
+
+Network : OK<br>
+
+Control Hub : Ready
+
+</div>
+
+</div>
+
+<br>
+
+<div class="card">
+
+<div class="sectionTitle">
+
+Today's Tools
+
+</div>
+
+<div class="tools">
+
+<div class="tool">Control Hub</div>
+
+<div class="tool">CUCM</div>
+
+<div class="tool">Webex Devices</div>
+
+<div class="tool">TAC</div>
+
+<div class="tool">Network Test</div>
+
+<div class="tool">Room Health</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="rightSide">
+
+<div class="bearCard">
+
+<img id="bearLogo" src="logo.png">
+
+<div id="speechBubble" class="bubble">
+
+Welcome Darren.<br>
+
+Bass Levels : Nominal<br>
+
+Vibes Detected<br>
+
+ENTER THE BEAR DEN
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="footer">
+
+DareBear Desk Pro v1.1
+
+</div>
+
+<script>
+
+let taps = 0;
+
+let timer = null;
+
+let bearMode = false;
+
+const logo = document.getElementById("bearLogo");
+
+const bubble = document.getElementById("speechBubble");
+
+logo.addEventListener("click",()=>{
+
+    taps++;
+
+    clearTimeout(timer);
+
+    timer = setTimeout(()=>{
+
+        taps=0;
+
+    },1500);
+
+    if(taps>=3){
+
+        taps=0;
+
+        toggleBearMode();
+
+    }
+
+});
+
+function toggleBearMode(){
+
+    bearMode=!bearMode;
+
+    if(bearMode){
+
+        document.body.style.background=
+        "radial-gradient(circle at center,#ff6a00,#6a00ff,#000000 80%)";
+
+        logo.style.transform="scale(1.12) rotate(-3deg)";
+
+        logo.style.filter=
+        "drop-shadow(0 0 40px #ff7b00) drop-shadow(0 0 90px #6a00ff)";
+
+        bubble.innerHTML=
+        "🐻 AFTER HOURS MODE<br><br>" +
+        "Welcome Back Darren<br>" +
+        "Bass Levels : MAXIMUM<br>" +
+        "Vibes : LEGENDARY<br><br>" +
+        "ENTER THE BEAR DEN";
+
+        bubble.style.background="#141414";
+
+        bubble.style.color="#00ffe1";
+
+        bubble.style.boxShadow=
+        "0 0 30px #ff7b00,0 0 80px #6a00ff";
+
+    }
+
+    else{
+
+        document.body.style.background=
+        "radial-gradient(circle at top left,#241047,#050008 70%)";
+
+        logo.style.transform="scale(1)";
+
+        logo.style.filter=
+        "drop-shadow(0 0 20px #00ffe1) drop-shadow(0 0 50px #6a00ff)";
+
+        bubble.innerHTML=
+        "Welcome Darren.<br>" +
+        "Bass Levels : Nominal<br>" +
+        "Vibes Detected<br>" +
+        "ENTER THE BEAR DEN";
+
+        bubble.style.background="white";
+
+        bubble.style.color="#231447";
+
+        bubble.style.boxShadow=
+        "0 0 20px #00ffe1,0 0 45px #6a00ff";
+
+    }
+
+}
+
+</script>
+
 </body>
 </html>
