@@ -5,11 +5,7 @@
 <title>DareBear Engineer Dashboard</title>
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
   font-family: Arial, Helvetica, sans-serif;
@@ -43,10 +39,7 @@ h1 {
   margin-bottom: 10px;
 }
 
-.subtitle {
-  font-size: 28px;
-  margin-bottom: 40px;
-}
+.subtitle { font-size: 28px; margin-bottom: 40px; }
 
 .sectionTitle {
   color: #ff71ff;
@@ -54,15 +47,9 @@ h1 {
   margin-bottom: 25px;
 }
 
-.status {
-  font-size: 28px;
-  line-height: 1.8;
-}
+.status { font-size: 28px; line-height: 1.8; }
 
-.green {
-  color: #00ff99;
-  text-shadow: 0 0 12px #00ff99;
-}
+.green { color: #00ff99; text-shadow: 0 0 12px #00ff99; }
 
 .tools {
   display: grid;
@@ -127,12 +114,14 @@ h1 {
   font-weight: bold;
   text-align: center;
   line-height: 1.35;
-  transition: all .8s ease;
+  transition: all .35s ease;
   min-width: 430px;
   box-shadow:
     0 0 20px #00ffe1,
     0 0 45px #6a00ff;
 }
+
+.smallText { font-size: 22px; }
 
 .afterButtons {
   margin-top: 20px;
@@ -191,9 +180,7 @@ h1 {
   white-space: pre-line;
 }
 
-.flash {
-  animation: flashScreen .35s ease;
-}
+.flash { animation: flashScreen .35s ease; }
 
 @keyframes flashScreen {
   0% { filter: brightness(1); }
@@ -201,9 +188,7 @@ h1 {
   100% { filter: brightness(1); }
 }
 
-.shake {
-  animation: shake .45s ease;
-}
+.shake { animation: shake .45s ease; }
 
 @keyframes shake {
   0% { transform: translate(0,0) scale(1.1); }
@@ -271,7 +256,7 @@ h1 {
 
 </div>
 
-<div class="footer">DareBear Desk Pro v1.3</div>
+<div class="footer">DareBear Desk Pro v1.4</div>
 
 <div id="overlay" class="overlay">
   <div class="overlayBox">
@@ -292,16 +277,31 @@ const terminal = document.getElementById("terminal");
 const afterButtons = document.getElementById("afterButtons");
 
 const normalLines = [
-  "Need another coffee?",
+  "Welcome back Darren.",
   "Bass levels holding steady.",
+  "Need another coffee?",
   "Another TAC case?",
-  "Welcome back, Darren.",
-  "One more firmware upgrade...",
+  "Checking room status...",
+  "Control Hub is behaving today.",
+  "Systems operating normally.",
+  "Ready for another deployment?",
+  "Don't forget to commit your changes.",
+  "Did you reboot it yet?",
   "Cisco TAC fears this engineer.",
-  "Warning: excessive professionalism detected.",
-  "Systems online.",
+  "RoomOS looking healthy.",
   "Vibes detected.",
-  "Ready when you are."
+  "One more firmware upgrade...",
+  "Engineer mode active.",
+  "Ready to Enter the Bear Den?",
+  "Remember to hydrate.",
+  "Coffee level: LOW.",
+  "Monitoring bass pressure.",
+  "Searching for bugs...",
+  "Building awesome things.",
+  "Professional by day.",
+  "DJ by night.",
+  "Everything looks nominal.",
+  "Let's make someone's conference room amazing."
 ];
 
 logo.addEventListener("click", () => {
@@ -326,11 +326,21 @@ logo.addEventListener("click", () => {
 });
 
 setInterval(() => {
-  if (!bearMode && !busy) {
+  if (bearMode || busy) return;
+
+  bubble.style.opacity = 0;
+
+  setTimeout(() => {
     const msg = normalLines[Math.floor(Math.random() * normalLines.length)];
-    bubble.innerHTML = msg + "<br><br>Systems: Online";
-  }
-}, 18000);
+
+    bubble.innerHTML =
+      msg +
+      "<br><br><span class='smallText'>Systems: Online</span>";
+
+    bubble.style.opacity = 1;
+  }, 300);
+
+}, 5000);
 
 function typeText(text, speed = 35) {
   return new Promise(resolve => {
@@ -389,6 +399,7 @@ function afterHoursMode() {
   logo.style.filter =
     "drop-shadow(0 0 45px #ff7b00) drop-shadow(0 0 95px #6a00ff)";
 
+  bubble.style.opacity = 1;
   bubble.innerHTML =
     "🐻 AFTER HOURS MODE<br><br>" +
     "Welcome Back Darren<br>" +
@@ -415,6 +426,7 @@ function normalMode() {
   logo.style.filter =
     "drop-shadow(0 0 20px #00ffe1) drop-shadow(0 0 50px #6a00ff)";
 
+  bubble.style.opacity = 1;
   bubble.innerHTML =
     "Welcome Darren.<br>" +
     "Bass Levels : Nominal<br>" +
