@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <title>DareBear Mode</title>
+
 <style>
   body {
     margin: 0;
@@ -19,49 +20,66 @@
   .wrap {
     position: relative;
     text-align: center;
+    margin-top: 120px;
   }
 
   .bubble {
     position: absolute;
-    top: -80px;
+    top: -155px;
     left: 50%;
     transform: translateX(-50%);
-    background: white;
-    color: #111;
-    padding: 18px 26px;
-    border-radius: 24px;
-    font-size: 28px;
+    width: 560px;
+    background: rgba(255,255,255,.96);
+    color: #20113d;
+    padding: 22px 28px;
+    border-radius: 30px;
+    font-size: 30px;
     font-weight: bold;
-    line-height: 1.25;
-    min-width: 420px;
-    box-shadow: 0 0 30px rgba(0,255,225,.65);
+    line-height: 1.35;
+    box-shadow:
+      0 0 25px #00ffe0,
+      0 0 60px #6a00ff;
+    z-index: 100;
   }
 
   .bubble:after {
     content: "";
     position: absolute;
-    bottom: -22px;
+    bottom: -20px;
     left: 50%;
-    transform: translateX(-50%);
-    border-width: 22px 16px 0 16px;
+    margin-left: -18px;
+    border-width: 20px 18px 0 18px;
     border-style: solid;
-    border-color: white transparent transparent transparent;
+    border-color: rgba(255,255,255,.96) transparent transparent transparent;
   }
 
   img {
-    max-height: 520px;
+    max-height: 470px;
     max-width: 80vw;
-    animation: pulse 1.6s infinite alternate;
-    filter: drop-shadow(0 0 25px #00ffe1)
-            drop-shadow(0 0 45px #a600ff);
+    animation: pulse 1.7s infinite alternate;
+    filter:
+      drop-shadow(0 0 25px #00ffe1)
+      drop-shadow(0 0 50px #a600ff);
   }
 
   @keyframes pulse {
-    from { transform: scale(1); }
-    to { transform: scale(1.06); }
+    from {
+      transform: scale(1);
+      filter:
+        drop-shadow(0 0 20px #00ffe1)
+        drop-shadow(0 0 40px #a600ff);
+    }
+
+    to {
+      transform: scale(1.05);
+      filter:
+        drop-shadow(0 0 35px #00ffe1)
+        drop-shadow(0 0 75px #a600ff);
+    }
   }
 </style>
 </head>
+
 <body>
   <div class="wrap">
     <div class="bubble">
