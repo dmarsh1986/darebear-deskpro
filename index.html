@@ -2,23 +2,40 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1, maximum-scale=1"
   >
 
-  <title>DareBear Engineer Dashboard</title>
+  <title>DareBear OS</title>
 
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
+  <!-- DJ laser/light effects -->
+  <div id="dj-effects" class="dj-effects" aria-hidden="true">
+    <div class="laser laser-1"></div>
+    <div class="laser laser-2"></div>
+    <div class="laser laser-3"></div>
+    <div class="laser laser-4"></div>
+
+    <div class="spotlight spotlight-1"></div>
+    <div class="spotlight spotlight-2"></div>
+
+    <div class="light-orb orb-1"></div>
+    <div class="light-orb orb-2"></div>
+    <div class="light-orb orb-3"></div>
+  </div>
+
   <main class="dashboard">
 
     <section class="left-column">
 
-      <div class="card header-card">
+      <!-- Header -->
+      <section class="card header-card">
 
         <div class="header-row">
 
@@ -47,105 +64,128 @@
           </div>
         </div>
 
-      </div>
+      </section>
 
-      <div class="lower-grid">
+      <!-- Status dashboard -->
+      <section class="card status-card">
 
-        <section class="card">
+        <div class="section-header">
+          <h2>Service & Network Status</h2>
 
-          <h2>System Status</h2>
+          <button id="refresh-status-button" class="small-button">
+            Refresh
+          </button>
+        </div>
 
-          <div class="status-list">
+        <div class="status-grid">
 
-            <div class="status-row">
-              <span>Internet</span>
-              <span id="internet-status" class="status-value">
-                Checking...
-              </span>
+          <article class="status-tile">
+            <div class="status-name">
+              Internet Connectivity
             </div>
 
-            <div class="status-row">
-              <span>Dashboard</span>
-              <span class="status-value">
-                Running
-              </span>
+            <div class="status-main">
+              <span id="internet-dot" class="status-dot checking"></span>
+              <span id="internet-status">Checking...</span>
             </div>
 
-            <div class="status-row">
-              <span>GitHub Page</span>
-              <span class="status-value">
-                Loaded
-              </span>
+            <div id="internet-detail" class="status-detail">
+              Testing connection
             </div>
+          </article>
 
-            <div class="status-row">
-              <span>Desk Pro WebView</span>
-              <span class="status-value">
-                Active
-              </span>
-            </div>
-
-            <div class="status-row">
-              <span>Clock</span>
-              <span class="status-value">
-                Online
-              </span>
-            </div>
-
-          </div>
-
-        </section>
-
-        <section class="card">
-
-          <h2>Engineer Tools</h2>
-
-          <div class="tools">
-
-            <button
-              class="tool"
-              data-url="https://admin.webex.com"
-            >
-              Control Hub
-            </button>
-
-            <button
-              class="tool"
-              data-url="https://status.webex.com"
-            >
-              Webex Status
-            </button>
-
-            <button
-              class="tool"
-              data-url="https://support.cisco.com"
-            >
-              Cisco Support
-            </button>
-
-            <button
-              class="tool"
-              data-url="https://roomos.cisco.com"
-            >
-              RoomOS Docs
-            </button>
-
-            <button
-              id="network-test"
-              class="tool tool-wide"
-            >
+          <article class="status-tile">
+            <div class="status-name">
               Network Test
-            </button>
+            </div>
 
-          </div>
+            <div class="status-main">
+              <span id="latency-dot" class="status-dot checking"></span>
+              <span id="latency-status">Waiting...</span>
+            </div>
 
-        </section>
+            <div id="latency-detail" class="status-detail">
+              Approximate response time
+            </div>
+          </article>
 
-      </div>
+          <article class="status-tile">
+            <div class="status-name">
+              Webex Cloud
+            </div>
+
+            <div class="status-main">
+              <span id="webex-dot" class="status-dot checking"></span>
+              <span id="webex-status">Checking...</span>
+            </div>
+
+            <div id="webex-detail" class="status-detail">
+              Public service status
+            </div>
+          </article>
+
+          <article class="status-tile">
+            <div class="status-name">
+              Fortnite / Epic
+            </div>
+
+            <div class="status-main">
+              <span id="fortnite-dot" class="status-dot checking"></span>
+              <span id="fortnite-status">Checking...</span>
+            </div>
+
+            <div id="fortnite-detail" class="status-detail">
+              Epic public status
+            </div>
+          </article>
+
+          <article class="status-tile">
+            <div class="status-name">
+              AWS Reachability
+            </div>
+
+            <div class="status-main">
+              <span id="aws-dot" class="status-dot checking"></span>
+              <span id="aws-status">Checking...</span>
+            </div>
+
+            <div id="aws-detail" class="status-detail">
+              Testing AWS endpoint
+            </div>
+          </article>
+
+          <article class="status-tile">
+            <div class="status-name">
+              GitHub Dashboard
+            </div>
+
+            <div class="status-main">
+              <span id="github-dot" class="status-dot checking"></span>
+              <span id="github-status">Checking...</span>
+            </div>
+
+            <div id="github-detail" class="status-detail">
+              Hosted page availability
+            </div>
+          </article>
+
+        </div>
+
+        <div class="last-checked-row">
+          Last checked:
+          <span id="last-checked">Not yet checked</span>
+        </div>
+
+      </section>
 
     </section>
 
-    <section class="card bear-card">
+    <!-- DareBear panel -->
+    <section id="bear-card" class="card bear-card">
+
+      <div id="mode-label" class="mode-label">
+        ENGINEER MODE
+      </div>
 
       <img
         id="bear-logo"
@@ -172,22 +212,78 @@
 
       </div>
 
+      <div id="music-controls" class="music-controls">
+
+        <div class="now-playing">
+          <span class="music-icon">♫</span>
+
+          <div>
+            <div class="now-playing-label">Now Playing</div>
+            <div class="track-title">Melt Your Bass Face</div>
+          </div>
+        </div>
+
+        <div class="equalizer" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+        <div class="music-button-row">
+          <button id="pause-music-button">
+            Pause
+          </button>
+
+          <button id="stop-music-button">
+            Stop DJ Mode
+          </button>
+        </div>
+
+      </div>
+
+      <div class="secret-hint">
+        Triple-tap DareBear
+      </div>
+
     </section>
 
   </main>
 
   <div class="footer">
-    DareBear Desk Pro v2.0
+    DareBear OS v3.0
   </div>
 
+  <!-- After Hours boot screen -->
   <div id="boot-overlay" class="boot-overlay">
 
     <div class="terminal-window">
+
+      <div class="terminal-heading">
+        DAREBEAR OS
+      </div>
+
       <div id="terminal-text" class="terminal-text"></div>
+
       <span class="terminal-cursor">█</span>
+
     </div>
 
   </div>
+
+  <audio
+    id="roar-audio"
+    src="roar.mp3"
+    preload="auto"
+  ></audio>
+
+  <audio
+    id="music-audio"
+    src="melt-your-bass-face.mp3"
+    preload="metadata"
+  ></audio>
 
   <script src="script.js"></script>
 
